@@ -1,0 +1,1 @@
+for i in ' '*int(input()):print(len(input()))
