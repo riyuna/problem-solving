@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
 p=469762049
 def fft(L, inv=False):
     j=0
@@ -42,16 +43,22 @@ def mul(L1, L2):
     fft(res,inv=True)
     return res
 
-pList=[1]*(10**6+1)
-pList[0]=0
-pList[1]=0
-dList=[0]*(10**6+1)
-for i in range(2, 10**6+1):
-    if not pList[i]:continue
-    if i*2<10**6:dList[i*2]=1
-    for j in range(i*2, 10**6+1, i):
-        pList[j]=0
-pList[2]=0
-res=mul(pList,dList)
-for i in ' '*int(input()):
-    print(res[int(input())])
+a,b=input().split()
+n=len(a)+len(b)-1
+a=list(map(int, list(a)))
+b=list(map(int, list(b)))
+if a[0]==0 or b[0]==0:
+    print('0')
+else:
+    res=mul(a,b)[:n]
+    ans=[0]*(n+1)
+    for i in range(n,0,-1):
+        ans[i]+=res[i-1]%10
+        ans[i-1]+=res[i-1]//10
+        ans[i-1]+=ans[i]//10
+        ans[i]%=10
+    start=True
+    for i in ans:
+        if start and i==0:continue
+        else:start=False
+        print(str(i))

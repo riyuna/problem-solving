@@ -1,0 +1,42 @@
+from decimal import *
+getcontext().prec = 55
+getcontext().rounding = ROUND_HALF_UP
+a,b,c=map(Decimal, input().split())
+pi=Decimal('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762')
+
+def sin(x):
+    if x>pi:
+        while x>pi:
+            x-=2*pi
+    if x<-pi:
+        while x<-pi:
+            x+=2*pi
+    
+    res=x
+    i=1
+    last=0
+    mul=x
+    fact=1
+    sign=-1
+    while res!=last:
+        last=res
+        mul*=x
+        mul*=x
+        i+=2
+        fact*=(i-1)*i
+        res+=sign*mul/fact
+        sign*=-1
+    return Decimal(+res)
+
+def f(x):return a*x+b*Decimal(sin(x))-c
+
+left=Decimal(0)
+right=Decimal(4000000)
+while right-left>Decimal(1e-30):
+    mid=(left+right)/2
+    k=f(mid)
+    if k>0:right=mid
+    if k<0:left=mid
+    if k==0:break
+
+print(round(mid, 6))

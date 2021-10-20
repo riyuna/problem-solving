@@ -1,9 +1,8 @@
-s=input()
-n=len(s)
-k=n//4
-if n%4!=0:k+=1
-for i in range(k):
-    spl = s[i*4:min(i*4+4, n)]
-    if len(spl)<4:spl=spl+'0'*(4-len(spl))
-    j=hex(int(spl,2))
-    print(j[2:],end='')
+n=19645431593125
+L=[]
+for i in range(1, int(n**0.5)+1):
+    j=int((n-i**2)**0.5)
+    if i**2+j**2==n:
+        print(i,j)
+        L.append((i,j))
+print(L)

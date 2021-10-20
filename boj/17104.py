@@ -1,47 +1,54 @@
-import math
-def fft(L, w):
+import sys
+input = sys.stdin.readline
+p=469762049
+def fft(L, inv=False):
+    j=0
     n=len(L)
-    if n==1:return
-    even=[0]*(n//2)
-    odd=[0]*(n//2)
-    for i in range(n):
-        if i%2:odd[i//2]=L[i]
-        else:even[i//2]=L[i]
-    fft(even, w**2)
-    fft(odd, w**2)
-    wp=1
-    for i in range(n//2):
-        L[i]=even[i]+odd[i]*wp
-        L[i+n//2]=even[i]-odd[i]*wp
-        wp*=w
-def multiply(L1,L2):
+    for i in range(1, n):
+        bit = n>>1
+        while j>=bit:
+            j-=bit
+            bit>>=1
+        j+=bit
+        if i<j:L[i],L[j]=L[j],L[i]
+    m=2
+    while m<=n:
+        u = pow(3, p//m, p)
+        if inv: u=pow(u, p-2, p)
+        for i in range(0, n ,m):
+            w=1
+            for k in range(i, i+m//2):
+                tmp=L[k+m//2]*w
+                L[k+m//2] = (L[k]-tmp)%p
+                L[k] += tmp
+                L[k]%=p
+                w*=u
+                w%=p
+        m*=2
+    if inv:
+        inv_n = p-(p-1)//n
+        for i in range(n):
+            L[i]=(L[i]*inv_n)%p
+
+def mul(L1):
     n=2
-    while n<len(L1) or n<len(L2):n*=2
+    while n<len(L1):n*=2
     n*=2
     L1+=[0]*(n-len(L1))
-    L2+=[0]*(n-len(L2))
-    w=complex(math.cos(2*math.pi/n),math.sin(2*math.pi/n))
-    fft(L1,w)
-    fft(L2,w)
-    L=[0]*n
-    for i in range(n):L[i]=L1[i]*L2[i]
-    fft(L,1/w)
-    for i in range(n):
-        L[i]/=n
-        L[i]=complex(round(L[i].real), round(L[i].imag))
-    return L
-    
-# t=int(input().split())
+    fft(L1)
+    res = [(i*i)%p for i in L1]
+    fft(res,inv=True)
+    return res
 
-L=[1]*(11)
-L[0]=0
-L[1]=0
-ct=1
-while ct<10:
-    ct+=1
-    if L[ct]==0:continue
-    for j in range(ct*2, 10, ct):L[j]=0
-L1=L[:]
-L2=L
-res=multiply(L1, L2)
-print(res)
+pList=[1]*(10**6+1)
+pList[0]=0
+pList[1]=0
+pList2=[0]*(10**5*5+1)
+for i in range(2, 10**6+1):
+    if not pList[i]:continue
+    for j in range(i*2, 10**6+1, i):pList[j]=0
+    pList2[i//2]=1
+res=mul(pList2)
+res[1]=1
+for _ in ' '*int(input()):
+    print((res[int(input())//2-1]+1)//2)
