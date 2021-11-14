@@ -1,0 +1,34 @@
+n=int(input())
+L=list(map(int,input().split()))
+if n==1:
+    L.sort()
+    print(sum(L)-L[-1])
+else:
+    meet3=[
+        L[0]+L[1]+L[2],
+        L[0]+L[1]+L[3],
+        L[0]+L[3]+L[4],
+        L[0]+L[2]+L[4],
+        L[5]+L[1]+L[2],
+        L[5]+L[1]+L[3],
+        L[5]+L[3]+L[4],
+        L[5]+L[2]+L[4],
+    ]
+    meet2=[
+        L[0]+L[1],
+        L[0]+L[2],
+        L[0]+L[3],
+        L[0]+L[4],
+        L[1]+L[2],
+        L[1]+L[3],
+        L[2]+L[4],
+        L[3]+L[4],
+        L[5]+L[1],
+        L[5]+L[2],
+        L[5]+L[3],
+        L[5]+L[4],
+    ]
+    a=min(L)
+    b=min(meet2)
+    c=min(meet3)
+    print(c*4+b*(8*n-12)+a*((n-2)**2+(n-1)*(n-2)*4))
