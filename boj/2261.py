@@ -13,18 +13,17 @@ def solve(L, start, end):
     sep = (L[start+n//2][0]+L[start+n//2-1][0])//2
     d = min(solve(L,start, start+n//2), solve(L, start+n//2, end))
 
-    M=set()
+    M=[]
 
     for i in range(n):
         d1 = sep-L[start+i][0]
-        if d1**2<d:M.add((L[start+i][1], L[start+i][0]))
+        if d1**2<d:M.append((L[start+i][1], L[start+i][0]))
 
-    M=list(M)
     M=sorted(M)
 
     for i in range(len(M)):
         for j in range(i+1, len(M)):
-            if (M[i][1]-M[j][1])**2>d:break
+            if (M[i][0]-M[j][0])**2>=d:break
             d = min(d, dist(M[i],M[j]))
     
     return d
