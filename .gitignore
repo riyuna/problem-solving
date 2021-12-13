@@ -4,6 +4,7 @@ tests
 *.json
 *.in
 *.out
+*.ans
 test.py
 hyundai/
 twitter_gatcha.py
