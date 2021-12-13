@@ -1,5 +1,9 @@
 test
+tests
 .vscode/
 *.json
+*.in
+*.out
 test.py
 hyundai/
+twitter_gatcha.py
