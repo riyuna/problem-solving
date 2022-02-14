@@ -1,0 +1,5 @@
+n=int(input())
+for i in ' '*n:print('@'*(n*5))
+for i in ' '*n:print('@'*n)
+for i in ' '*n:print('@'*(n*5))
+for i in ' '*(n*2):print('@'*n)

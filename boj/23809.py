@@ -1,0 +1,11 @@
+n=int(input())
+for i in ' '*n:
+	print('@'*n+' '*3*n+'@'*n)
+for i in ' '*n:
+	print('@'*n+' '*2*n+'@'*n)
+for i in ' '*n:
+	print('@'*3*n)
+for i in ' '*n:
+	print('@'*n+' '*2*n+'@'*n)
+for i in ' '*n:
+	print('@'*n+' '*3*n+'@'*n)
