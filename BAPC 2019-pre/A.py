@@ -1,0 +1,1 @@
+f=lambda:max(map(int,input().split()));input();x,y=f(),f();print("impossible"[(x==y)*2])
