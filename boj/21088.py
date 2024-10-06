@@ -74,12 +74,14 @@ pmem=dict()
 grundy = 0 
 for i in L:
 	s=facto(i)
+	smem=dict()
 	for j in s:
 		if j not in pmem:
 			pmem[j]=1
 		else: pmem[j]+=1
+		smem[j]=True
 	for p in pmem:
-		if p not in s and pmem[p]:
+		if p not in smem and pmem[p]:
 			grundy^=pmem[p]
 			pmem[p]=0
 for p in pmem:
